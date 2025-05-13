@@ -220,12 +220,16 @@ void ADC_IRQHandler(void)
 {
   /* USER CODE BEGIN ADC_IRQn 0 */
 
+ uint16_t adc1in1;
   /* USER CODE END ADC_IRQn 0 */
   HAL_ADC_IRQHandler(&hadc1);
   /* USER CODE BEGIN ADC_IRQn 1 */
 
+  adc1in1 = HAL_ADC_GetValue(&hadc1);
+  TIM2->CCR1 = adc1in1;
   /* USER CODE END ADC_IRQn 1 */
 }
+ }
 
 /**
   * @brief This function handles TIM2 global interrupt.
@@ -238,6 +242,7 @@ void TIM2_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
 
+  HAL_ADC_Start_IT(&hadc1);
   /* USER CODE END TIM2_IRQn 1 */
 }
 
